@@ -1,24 +1,26 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 function App() {
+  const [file, setFile] = React.useState<string>();
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    console.log(e.target.files);
+    if (e.target.files !== null) {
+      setFile(URL.createObjectURL(e?.target?.files[0]));
+    }
+  }
+  function clearImage() {
+    setFile('');
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h2>Add Image:</h2>
+      <input type="file" onChange={handleChange} />
+      <h2>Clear Image:</h2>
+      <button title='Clear' onClick={clearImage} />
+      <img className="Image" src={file} />
+
     </div>
   );
 }
